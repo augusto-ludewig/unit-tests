@@ -4,7 +4,6 @@ import br.com.unittests.domain.User;
 import br.com.unittests.domain.exception.ValidationException;
 import domain.builders.UserBuilder;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -28,5 +27,21 @@ public class UserTest {
                 UserBuilder.anUserBuilder().withName(null).now()
         );
         Assertions.assertEquals("Name need to be valid!", ex.getMessage());
+    }
+
+    @Test
+    public void mustRejectUserWithouEmail(){
+        ValidationException ex = Assertions.assertThrows(ValidationException.class, () ->
+                UserBuilder.anUserBuilder().withEmail(null).now()
+        );
+        Assertions.assertEquals("Email need to be valid!", ex.getMessage());
+    }
+
+    @Test
+    public void mustRejectUserWithouPassword(){
+        ValidationException ex = Assertions.assertThrows(ValidationException.class, () ->
+                UserBuilder.anUserBuilder().withPassword(null).now()
+        );
+        Assertions.assertEquals("Password need to be valid!", ex.getMessage());
     }
 }
