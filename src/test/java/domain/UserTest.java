@@ -9,13 +9,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import sun.reflect.ReflectionFactory;
 
-public class UserTest {
+class UserTest {
 
     @Test
     @DisplayName("Must create an valid User")
-    public void mustCreateAnValidUser(){
+    void mustCreateAnValidUser(){
         User user = UserBuilder.anUserBuilder().now();
         Assertions.assertAll("User",
                 () -> Assertions.assertEquals(1L, user.getId()),
@@ -26,7 +25,7 @@ public class UserTest {
     }
 
     @Test
-    public void mustRejectUserWithouName(){
+    void mustRejectUserWithouName(){
         ValidationException ex = Assertions.assertThrows(ValidationException.class, () ->
                 UserBuilder.anUserBuilder().withName(null).now()
         );
@@ -34,7 +33,7 @@ public class UserTest {
     }
 
     @Test
-    public void mustRejectUserWithouEmail(){
+    void mustRejectUserWithouEmail(){
         ValidationException ex = Assertions.assertThrows(ValidationException.class, () ->
                 UserBuilder.anUserBuilder().withEmail(null).now()
         );
@@ -42,7 +41,7 @@ public class UserTest {
     }
 
     @Test
-    public void mustRejectUserWithouPassword(){
+    void mustRejectUserWithouPassword(){
         ValidationException ex = Assertions.assertThrows(ValidationException.class, () ->
                 UserBuilder.anUserBuilder().withPassword(null).now()
         );
@@ -52,7 +51,7 @@ public class UserTest {
     // junior mode to do
     @ParameterizedTest
     @ValueSource(strings = {"Name need to be valid!", "Email need to be valid!", "Password need to be valid!"})
-    public void mustRejectUserWithouSomeAtribute(String param){
+    void mustRejectUserWithouSomeAtribute(String param){
         String method = param.split(" ")[0];
         ValidationException ex = new ValidationException("");
 
@@ -81,7 +80,7 @@ public class UserTest {
                     "1, Username, null, 123, Email need to be valid!",
                     "1, Username, user@email.com, null, Password need to be valid!"
     }, nullValues = "null")
-    public void mustRejectUserWithouSomeAtributeTestWithCsv(Long id, String name, String email, String password, String msg){
+    void mustRejectUserWithouSomeAtributeTestWithCsv(Long id, String name, String email, String password, String msg){
         ValidationException ex = Assertions.assertThrows(ValidationException.class, () ->
                 UserBuilder.anUserBuilder()
                 .withId(id)

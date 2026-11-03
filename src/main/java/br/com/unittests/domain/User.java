@@ -2,6 +2,8 @@ package br.com.unittests.domain;
 
 import br.com.unittests.domain.exception.ValidationException;
 
+import java.util.Objects;
+
 public class User {
 
     private Long id;
@@ -35,5 +37,16 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof User user)) return false;
+        return Objects.equals(getId(), user.getId()) && Objects.equals(getName(), user.getName()) && Objects.equals(getEmail(), user.getEmail()) && Objects.equals(getPassword(), user.getPassword());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getEmail(), getPassword());
     }
 }
